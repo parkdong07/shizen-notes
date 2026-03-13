@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#7B9E6B" />
+  <meta name="description" content="Shizen Notes — บันทึกชีวิตในแบบของคุณ" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Shizen" />
+  <title>Shizen Notes 自然</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-kanji">自然</span>
+        <span class="logo-text">Shizen Notes</span>
+      </div>
+      <div class="header-actions">
+        <span class="sync-status" id="syncStatus" title="Sync status">●</span>
+        <button class="icon-btn" id="notifyToggle" title="Toggle notifications" aria-label="Toggle notifications">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+        <button class="icon-btn" id="authBtn" title="Account" aria-label="Account">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Tabs -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="notes" role="tab" aria-selected="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+      บันทึก
+    </button>
+    <button class="tab-btn" data-tab="todos" role="tab" aria-selected="false">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      สิ่งที่ต้องทำ
+    </button>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+
+    <!-- Notes Tab -->
+    <section id="tab-notes" class="tab-panel active" role="tabpanel">
+      <div class="panel-header">
+        <div class="search-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="search" id="noteSearch" placeholder="ค้นหาบันทึก..." aria-label="ค้นหาบันทึก" />
+        </div>
+      </div>
+      <div class="notes-grid" id="notesGrid">
+        <div class="empty-state" id="notesEmpty">
+          <span class="empty-kanji">余白</span>
+          <p>ยังไม่มีบันทึก<br />เริ่มเขียนสิ่งที่อยู่ในใจ</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Todos Tab -->
+    <section id="tab-todos" class="tab-panel" role="tabpanel" hidden>
+      <div class="panel-header">
+        <div class="todo-filters">
+          <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+          <button class="filter-btn" data-filter="pending">รอทำ</button>
+          <button class="filter-btn" data-filter="today">วันนี้</button>
+          <button class="filter-btn" data-filter="done">เสร็จแล้ว</button>
+        </div>
+      </div>
+      <div class="todos-list" id="todosList">
+        <div class="empty-state" id="todosEmpty">
+          <span class="empty-kanji">清空</span>
+          <p>ยังไม่มีสิ่งที่ต้องทำ<br />เพิ่มงานที่อยากทำวันนี้</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FAB -->
+  <button class="fab" id="fabBtn" aria-label="เพิ่มรายการใหม่">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  </button>
+
+  <!-- Modal: Add/Edit Note -->
+  <div class="modal-overlay" id="noteModal" role="dialog" aria-modal="true" aria-labelledby="noteModalTitle" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="noteModalTitle">บันทึกใหม่</h2>
+        <button class="icon-btn" id="closeNoteModal" aria-label="ปิด">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="noteId" />
+        <input type="text" id="noteTitle" class="form-input" placeholder="หัวข้อ (ไม่บังคับ)" aria-label="หัวข้อ" />
+        <div class="mood-picker" role="group" aria-label="อารมณ์">
+          <span class="mood-label">อารมณ์</span>
+          <div class="mood-options">
+            <button class="mood-btn" data-mood="😊">😊</button>
+            <button class="mood-btn" data-mood="😌">😌</button>
+            <button class="mood-btn" data-mood="😔">😔</button>
+            <button class="mood-btn" data-mood="😤">😤</button>
+            <button class="mood-btn" data-mood="🌿">🌿</button>
+            <button class="mood-btn" data-mood="⚡">⚡</button>
+          </div>
+        </div>
+        <textarea id="noteContent" class="form-textarea" placeholder="เขียนอะไรก็ได้ที่อยู่ในใจ..." aria-label="เนื้อหา" rows="8"></textarea>
+        <input type="text" id="noteTags" class="form-input" placeholder="แท็ก: work, personal, idea (คั่นด้วยจุลภาค)" aria-label="แท็ก" />
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" id="deleteNoteBtn" style="display:none">ลบ</button>
+        <div class="modal-actions-right">
+          <button class="btn btn-ghost" id="cancelNoteBtn">ยกเลิก</button>
+          <button class="btn btn-primary" id="saveNoteBtn">บันทึก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Add/Edit Todo -->
+  <div class="modal-overlay" id="todoModal" role="dialog" aria-modal="true" aria-labelledby="todoModalTitle" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="todoModalTitle">งานใหม่</h2>
+        <button class="icon-btn" id="closeTodoModal" aria-label="ปิด">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="todoId" />
+        <input type="text" id="todoTitle" class="form-input" placeholder="สิ่งที่ต้องทำ..." aria-label="ชื่องาน" required />
+        <textarea id="todoNote" class="form-textarea" placeholder="รายละเอียดเพิ่มเติม (ไม่บังคับ)" rows="3" aria-label="รายละเอียด"></textarea>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="todoDue">วันที่กำหนด</label>
+            <input type="datetime-local" id="todoDue" class="form-input" aria-label="วันที่กำหนด" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="todoPriority">ความสำคัญ</label>
+            <select id="todoPriority" class="form-select" aria-label="ความสำคัญ">
+              <option value="low">🟢 ต่ำ</option>
+              <option value="medium" selected>🟡 ปานกลาง</option>
+              <option value="high">🔴 สูง</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group reminder-section" id="reminderSection">
+          <label class="form-label" for="todoRemind">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            แจ้งเตือนเวลา
+          </label>
+          <input type="datetime-local" id="todoRemind" class="form-input" aria-label="เวลาแจ้งเตือน" />
+          <span class="helper-text">ต้องเปิดการแจ้งเตือนก่อน</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" id="deleteTodoBtn" style="display:none">ลบ</button>
+        <div class="modal-actions-right">
+          <button class="btn btn-ghost" id="cancelTodoBtn">ยกเลิก</button>
+          <button class="btn btn-primary" id="saveTodoBtn">บันทึก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- PWA Install Banner -->
+  <div class="install-banner" id="installBanner" hidden>
+    <div class="install-content">
+      <span>📱 ติดตั้งแอปบนมือถือ</span>
+      <button class="btn btn-sm btn-primary" id="installBtn">ติดตั้ง</button>
+      <button class="icon-btn" id="dismissInstall" aria-label="ปิด">✕</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="env.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
