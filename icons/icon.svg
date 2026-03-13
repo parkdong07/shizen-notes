@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="120" fill="#7B9E6B"/>
+  <!-- Paper -->
+  <rect x="156" y="136" width="200" height="240" rx="12" fill="#FDFBF7" opacity="0.95"/>
+  <!-- Lines -->
+  <line x1="180" y1="200" x2="332" y2="200" stroke="#E8E3D8" stroke-width="8" stroke-linecap="round"/>
+  <line x1="180" y1="228" x2="332" y2="228" stroke="#E8E3D8" stroke-width="8" stroke-linecap="round"/>
+  <line x1="180" y1="256" x2="300" y2="256" stroke="#E8E3D8" stroke-width="8" stroke-linecap="round"/>
+  <!-- Pen accent -->
+  <rect x="312" y="290" width="10" height="52" rx="5" fill="#7B9E6B" transform="rotate(-35 312 290)"/>
+  <!-- Leaf dot -->
+  <circle cx="180" cy="172" r="7" fill="#7B9E6B" opacity="0.5"/>
+</svg>
